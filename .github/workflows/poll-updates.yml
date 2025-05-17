@@ -1,0 +1,16 @@
+name: Poll for upstream updates
+on:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  poll-updates:
+    name: Poll for upstream updates
+    runs-on: ubuntu-latest
+    steps:
+      - name: Execute merge upstream
+        uses: ./.github/workflows/merge-upstream.yml
+        with:
+          source: https://git.sr.ht/~tsileo/microblog.pub
+          source_branch: v2
+          target_branch: v2
