@@ -6,15 +6,9 @@ on:
 
 jobs:
   poll-updates:
-    name: Poll for upstream updates
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      
-      - name: Execute merge upstream
-        uses: ./.github/workflows/merge-upstream.yml
-        with:
-          source: https://git.sr.ht/~tsileo/microblog.pub
-          source_branch: v2
-          target_branch: v2
+    name: Execute merge-upstream
+    uses: ./.github/workflows/merge-upstream.yml
+    with:
+      source: https://git.sr.ht/~tsileo/microblog.pub
+      source_branch: v2
+      target_branch: v2
