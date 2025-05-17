@@ -17,7 +17,7 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 RUN curl -sSL https://install.python-poetry.org | python3 - 
 WORKDIR $PYSETUP_PATH
 COPY poetry.lock pyproject.toml ./
-RUN poetry install --only main
+RUN poetry install --only main --no-root
 
 FROM python-base as production
 RUN apt-get update
