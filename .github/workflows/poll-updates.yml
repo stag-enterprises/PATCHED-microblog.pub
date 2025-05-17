@@ -1,5 +1,6 @@
 name: Poll for upstream updates
 on:
+  workflow_dispatch:
   schedule:
     - cron: '0 16 * * *'
 
@@ -8,6 +9,9 @@ jobs:
     name: Poll for upstream updates
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      
       - name: Execute merge upstream
         uses: ./.github/workflows/merge-upstream.yml
         with:
