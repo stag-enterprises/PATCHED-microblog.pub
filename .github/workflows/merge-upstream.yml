@@ -69,8 +69,8 @@ jobs:
         id: prepare_branch
         shell: bash
         run: |
-          UPSTREAM_URL="${{ github.event.inputs.source }}"
-          UPSTREAM_BRANCH="${{ github.event.inputs.source_branch }}"
+          UPSTREAM_URL="${{ inputs.source }}"
+          UPSTREAM_BRANCH="${{ inputs.source_branch }}"
           TARGET_URL="https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
           TEMP_DIR=$(mktemp -d)
 
@@ -106,7 +106,7 @@ jobs:
         id: pr_needed
         shell: bash
         run: |
-          TARGET_BRANCH="${{ github.event.inputs.target_branch }}"
+          TARGET_BRANCH="${{ inputs.target_branch }}"
           SYNC_BRANCH="${{ steps.prepare_branch.outputs.sync_branch_name }}"
           TARGET_URL="https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
           TEMP_DIR=$(mktemp -d)
@@ -171,19 +171,19 @@ jobs:
           SYNC_BRANCH="${{ steps.prepare_branch.outputs.sync_branch_name }}"
           UPSTREAM_SHA="${{ steps.prepare_branch.outputs.external_head_sha }}"
           UPSTREAM_SHA_SHORT="${{ steps.prepare_branch.outputs.external_head_sha_short }}"
-          PR_TITLE="${{ github.event.inputs.pr_prefix }} ${{ github.event.inputs.source_branch }} into ${{ github.event.inputs.target_branch }} - SHA ${UPSTREAM_SHA_SHORT}"
+          PR_TITLE="${{ inputs.pr_prefix }} ${{ inputs.source_branch }} into ${{ inputs.target_branch }} - SHA ${UPSTREAM_SHA_SHORT}"
           
           PR_BODY="
-          Syncing from: \`${{ github.event.inputs.source }}\` (branch: \`${{ github.event.inputs.source_branch }}\`)
+          Syncing from: \`${{ inputs.source }}\` (branch: \`${{ inputs.source_branch }}\`)
 
           External source commit: \`${UPSTREAM_SHA}\`
 
-          Commits from \`$SYNC_BRANCH\` are to be merged onto \`${{ github.event.inputs.target_branch }}\`.
+          Commits from \`$SYNC_BRANCH\` are to be merged onto \`${{ inputs.target_branch }}\`.
           "
 
           echo "creating PR of title: $PR_TITLE"
           PR_URL=$(gh pr create \
-            --base "${{ github.event.inputs.target_branch }}" \
+            --base "${{ inputs.target_branch }}" \
             --head "$SYNC_BRANCH" \
             --title "$PR_TITLE" \
             --body "$PR_BODY" 2>&1)
