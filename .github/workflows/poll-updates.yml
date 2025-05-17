@@ -1,7 +1,7 @@
 name: Poll for upstream updates
 on:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 16 * * *'
 
 jobs:
   poll-updates:
