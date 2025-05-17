@@ -112,7 +112,7 @@ jobs:
           TEMP_DIR=$(mktemp -d)
           SKIP_PR="false"
 
-          echo "does '$SYNC_BRANCH' need a merge into '$TARGET_BRANCH'? checking this'
+          echo "does '$SYNC_BRANCH' need a merge into '$TARGET_BRANCH'? checking this"
           git clone "$TARGET_URL" "$TEMP_DIR"
           cd "$TEMP_DIR"
 
